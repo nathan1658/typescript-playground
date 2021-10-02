@@ -19,11 +19,12 @@ export const itemsRouter = express.Router();
 
 // GET items
 
-itemsRouter.get("/", async (req: Request, res: Response) => {
+itemsRouter.get("/", async (req: Request, res: Response) => {    
     try {
         const items: Item[] = await ItemService.findAll();
         res.status(200).send(items);
     } catch (e) {
+        console.log(e);
         res.status(500).send(e.message);
     }
 })
