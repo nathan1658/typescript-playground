@@ -2,10 +2,11 @@
  * Required External Modules and Interfaces
  */
 
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import * as ItemService from "./items.service";
 import { BaseItem, Item } from "./item.interface";
 import { networkInterfaces } from "os";
+import HttpException from "../common/http-exception";
 
 /**
  * Router Definition
@@ -19,8 +20,10 @@ export const itemsRouter = express.Router();
 
 // GET items
 
-itemsRouter.get("/", async (req: Request, res: Response) => {    
+itemsRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {    
     try {
+        
+        next(new HttpException(200,"diu"));
         const items: Item[] = await ItemService.findAll();
         res.status(200).send(items);
     } catch (e) {
